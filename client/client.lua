@@ -104,7 +104,7 @@ end)
 --==           Deposit Event                   ==
 --===============================================
 RegisterNUICallback('deposit', function(data)
-        Wait(100)
+        Wait(1000)
 	TriggerServerEvent('bank:deposit', tonumber(data.amount))
 	TriggerServerEvent('bank:balance')
 end)
