@@ -1,8 +1,5 @@
---================================================================================================--
---==                                VARIABLES - DO NOT EDIT                                     ==--
---================================================================================================--
-ESX                         = nil
-inMenu                      = true
+ESX = nil
+inMenu  = true
 local atbank = false
 local bankMenu = true
 
@@ -25,13 +22,6 @@ function playAnim(animDict, animName, duration)
 	RemoveAnimDict(animDict)
 end
 
---================================================================================================
---==                                THREADING - DO NOT EDIT                                     ==
---================================================================================================
-
---===============================================
---==           Base ESX Threading              ==
---===============================================
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -39,13 +29,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-
-
-
-
---===============================================
---==             Core Threading                ==
---===============================================
 if bankMenu then
 	Citizen.CreateThread(function()
 		while true do
@@ -69,12 +52,6 @@ if bankMenu then
 	end)
 end
 
-
---===============================================
---==             Map Blips	                   ==
---===============================================
-
---BANK
 Citizen.CreateThread(function()
 	if Config.ShowBlips then
 	  for k,v in ipairs(Config.Bank)do
@@ -127,6 +104,7 @@ end)
 --==           Deposit Event                   ==
 --===============================================
 RegisterNUICallback('deposit', function(data)
+        Wait(100)
 	TriggerServerEvent('bank:deposit', tonumber(data.amount))
 	TriggerServerEvent('bank:balance')
 end)
@@ -207,7 +185,7 @@ end)
 --==            Capture Bank Distance          ==
 --===============================================
 function nearBank()
-	local player = GetPlayerPed(-1)
+	local player = PlayerPedId()
 	local playerloc = GetEntityCoords(player, 0)
 
 	for _, search in pairs(Config.Bank) do
@@ -220,7 +198,7 @@ function nearBank()
 end
 
 function nearATM()
-	local player = GetPlayerPed(-1)
+	local player = PlayerPedId()
 	local playerloc = GetEntityCoords(player, 0)
 
 	for _, search in pairs(Config.ATM) do
